@@ -3,6 +3,7 @@ package com.udacity.gamedev.fileloading;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -64,15 +65,19 @@ public class FileLoading extends ApplicationAdapter {
 
         // TODO: Go find the text file in the android/assets directory
         // TODO: Get a FileHandle using Gdx.files.internal()
+        FileHandle fileHandle = Gdx.files.internal("punchline");
 
 
         // TODO: Read the file using FileHandle.readString()
+        String result = fileHandle.readString();
 
 
         // TODO: Decrypt the punchline
+        String decripted = decrypt(result);
 
 
         // TODO: Log the rest of the joke
+        Gdx.app.log(TAG,decripted);
 
     }
 
