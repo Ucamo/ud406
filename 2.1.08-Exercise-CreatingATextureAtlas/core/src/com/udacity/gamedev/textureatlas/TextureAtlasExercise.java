@@ -4,8 +4,10 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class TextureAtlasExercise extends ApplicationAdapter implements AssetErrorListener {
 
@@ -15,33 +17,40 @@ public class TextureAtlasExercise extends ApplicationAdapter implements AssetErr
     private static final String STANDING_RIGHT = "standing-right";
 
     // TODO: Add an AssetManager
+    private AssetManager assetManager;
 
 
     SpriteBatch batch;
 
     // TODO: Add an AtlasRegion to hold the standing right sprite
-
+    private TextureAtlas.AtlasRegion standingRight;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
 
         // TODO: Initialize your AssetManager
+        assetManager = new AssetManager();
 
 
         // TODO: Set this as the AssetManager's error listener
+        assetManager.setErrorListener(this);
 
 
         // TODO: tell the AssetManager to load the TextureAtlas with name ATLAS
+        assetManager.load(ATLAS, TextureAtlas.class);
 
 
         // TODO: Call finishLoading() on your AssetManager
+        assetManager.finishLoading();
 
 
         // TODO: Get the TextureAtlas from the asset manager
+        TextureAtlas atlas = assetManager.get(ATLAS);
 
 
         // TODO: Populate your AtlasRegion using findRegion() on your Atlas
+        standingRight= atlas.findRegion(STANDING_RIGHT);
 
     }
 
@@ -56,6 +65,23 @@ public class TextureAtlasExercise extends ApplicationAdapter implements AssetErr
         // Hint, you need to use the somewhat horrific version of draw with signature:
         // draw (Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX,
         // float scaleY, float rotation, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY)
+        batch.draw(
+                standingRight.getTexture(),
+                0,
+                0,
+                0,
+                0,
+                standingRight.getRegionWidth(),
+                standingRight.getRegionHeight(),
+                1,
+                1,
+                0,
+                standingRight.getRegionX(),
+                standingRight.getRegionY(),
+                standingRight.getRegionWidth(),
+                standingRight.getRegionHeight(),
+                false,
+                false);
 
         batch.end();
     }
@@ -69,6 +95,7 @@ public class TextureAtlasExercise extends ApplicationAdapter implements AssetErr
     public void dispose() {
         batch.dispose();
         // TODO: Dispose of the AssetManager
+        assetManager.dispose();
 
     }
 }
